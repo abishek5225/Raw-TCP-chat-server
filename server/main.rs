@@ -8,4 +8,13 @@ fn main(){
     let clients = Arc::new(Mutex::new(Vec::new()));
 
     println!("Server started on {}",)
+    for stream in listner.incoming(){
+        match stream {
+            Ok(stream) => {
+                let clients = Arc::clone(&clients)
+            }
+            Err(e) => println!("Error: {}", e),
+            
+        }
+    }
 }
