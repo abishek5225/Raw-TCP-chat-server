@@ -11,10 +11,19 @@ fn main(){
     for stream in listner.incoming(){
         match stream {
             Ok(stream) => {
-                let clients = Arc::clone(&clients)
+                let clients = Arc::clone(&clients);
+
+                clients.lock().unwrap().push(stream.try_clone().except("Failed to clone client"));
+
+                thread::spawn(move || {
+                    handle_client(stream, clients);
+                })
             }
             Err(e) => println!("Error: {}", e),
             
         }
     }
+}
+fn handle_client(){
+    
 }
