@@ -24,6 +24,26 @@ fn main(){
         }
     }
 }
-fn handle_client(){
-    
+fn handle_client(mut stream: TcpStream, clients: Arc<Mutex<Vec<TcpStream>>>){
+    let mut buffer = [0; 512];
+     
+    while match stream.read(&mut buffer){
+
+    Ok(size){
+        if size == 0 {
+            return;
+        }
+    let message = &buffer[0..size];
+    let mut clients_guard = clients.lock().unwrap();
+
+            for mut client in clients_guard.iter() {
+                client.write_all(message).expect("Failed to broadcast");
+            }
+            true
+        }
+        Err(_) => {
+            println!("An error occurred with a client");
+            false
+    }
+    }{}
 }
