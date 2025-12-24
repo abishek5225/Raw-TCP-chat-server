@@ -7,7 +7,7 @@ fn main(){
     let listner = TcpListener::bind("127.0.0.1.8080").expect("Could not bind");
     let clients = Arc::new(Mutex::new(Vec::new()));
 
-    println!("Server started on {}",)
+    println!("Server started on 127.0.0.1.8080",)
     for stream in listner.incoming(){
         match stream {
             Ok(stream) => {
